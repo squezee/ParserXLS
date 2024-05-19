@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+body, html{
+    margin: 0;
+    padding: 0;
+    font-family: "Titillium Web", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+}
+.container{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+header{
+    height: 60px;
+    background-color: #46c03b;
+}
+header .container{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.logo{
+    display: block;
+    font-size: 24px;
+    color: white;
+}
+.authForm {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+    gap: 20px;
+}
+.authForm .label {
+    font-size: 24px;
+    color: black;
+}
+.authInputBlock {
+    padding: 5px;
+    border: 1px solid rgb(0,0,0,0.25);
+    border-radius: 4px;
+}
+input{
+    font-size: 18px;
+    font-family: "Titillium Web", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+    outline: none;
+    border: none;
+}
+select{
+    font-size: 18px;
+    font-family: "Titillium Web", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+    padding: 0;
+    margin: 0;
+    user-select: none;
+    outline: none;
+    border: none;
+}
+.authInputBlock input{
+    padding: 10px 25px;
+
+}
+.submitBtn {
+    color: white;
+    background-color: #46c03b;
+    padding: 15px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+.findBtn{
+    color: white;
+    background-color: #46c03b;
+    padding: 15px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 150ms ease;
+    width: 57px;
+    margin: 25px 0;
+}
+.findBtn:hover{
+    opacity: 0.75;
+}
+.submitBtn:hover{
+    opacity: 0.75;
+}
+.errorBlock{
+    display: none;
+    background-color: #c81313;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.parserQueue {
+    margin-top: 25px;
+    
+    display: flex;
+}
+.parserQueue .label {
+    color: white;
+    max-width: 60px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    padding: 0 25px;
+    background-color: #46c03b;
+    padding-right: 35px;
+    border-radius: 4px 0 0 4px;
+}
+.parserQueueInner {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: calc(100% - 290px);
+}
+.addBtnDropDown{
+    padding: 30px 15px;
+    position: absolute;
+    bottom: -156px;
+    right: 0;
+    max-height: 0;
+    transition: all 150ms ease;
+    display: none;
+}
+.addConditionBtn{
+    max-height: 0;
+    background-color: #68c060;
+    font-size: 14px;
+    color: white;
+    padding: 5px 20px;
+    transition: all 150ms ease;
+    cursor: pointer;
+    display: none;
+    min-width: 119px;
+
+}.addConditionBtn:hover{
+    opacity: 0.75;
+}
+.addBtn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    color: white;
+    padding: 0 15px;
+    background-color: #68c060;
+    transition: all ease 150ms;
+    border-radius: 0 4px 4px 0;
+}
+.addBtn:hover{
+    filter: brightness(1.1);
+    cursor: pointer;
+}
+.addBtn:hover .addBtnDropDown{
+    max-height: none;
+    display: block;
+}
+.addBtn:hover .addBtnDropDown .addConditionBtn{
+    max-height: none;
+    display: block;
+    transition: all 150ms ease;
+}
+.addBtn::before{
+    content: "";
+    position: absolute;
+    height: 50px;
+    width: 40px;
+    background-color: #68c060;
+    border-radius: 50%;
+    top: 50%;
+    left: -25px;
+    transform: translate(0,-50%);
+}
+
+.conditionBlock::before{
+    content: "";
+    position: absolute;
+    height: 50px;
+    width: 40px;
+    background-color: #68c060;
+    border-radius: 50%;
+    top: 50%;
+    left: -25px;
+    transform: translate(0,-50%);
+}
+.conditionBlock {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+    height: 90px;
+    color: white;
+    padding: 0 15px;
+    background-color: #46c03b;
+    padding-right: 35px;
+    padding-top: 10px;
+    padding-left: 25px;
+}
+.conditionBlock.range{
+    gap: 2px;
+    padding-right: 36px;
+}
+.conditionLabel{
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    font-size: 14px;
+    color: white;
+    font-weight: 800;
+}
+.conditionBlock:nth-child(odd){
+    background-color: #68c060;
+}
+.conditionBlock:nth-child(even)::before{
+    background-color: #46c03b;
+}
+.conditionInput input{
+    font-size: 16px;
+    max-width: 80px;
+    padding: 0 5px;
+}
+.conditionInput select{
+    font-size: 16px;
+    max-width: 81px;
+}
+.conditionInputAndLabel{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.conditionInputAndLabel .label{
+    font-size: 16px;
+    color: white;
+    background-color: transparent;
+    padding: 0;
+    height: auto;
+}
+.selectCols {
+}
+.smallInput input{
+    width: 50px;
+    padding: 0;
+}
+.smallInput{
+    padding: 0;
+}
+.resultWrapper {
+}
+.resultLabel {
+    padding: 25px 0;
+}
+.resultContent {
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+    
+}
+.resultItem{
+    width: calc(100% - 50px);
+    background-color:#68c060;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 5px 25px;
+}
+.resultItem:nth-child(odd) {
+    background-color:#46c03b;
+}
+.resultItemValueAndLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.label {
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+}
+.value {
+    font-size: 18px;
+    font-weight: 400;
+    color: black;
+}
