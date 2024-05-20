@@ -54,7 +54,6 @@ if(!$isErrorExist){
             $sql = $sql.", col".$i." "."varchar(70)";
         }
         $sql = $sql.");";
-        echo $sql;
         $conn->exec($sql);
         }catch(PDOException $e){}
         

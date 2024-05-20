@@ -1,5 +1,12 @@
 var COLS = [];
-
+function showErrorMessage(msg){
+    let errorBlock = document.querySelector('.errorBlock');
+            errorBlock.innerHTML = msg;
+            errorBlock.style.display = "block";
+            setTimeout(() => {
+                errorBlock.style.display = "none";
+              }, 3000);
+}
 async function getCols(){
     const response = await fetch("api/getCols.php",{
         method: "GET",
@@ -29,53 +36,68 @@ class Range{
     }
 }
 document.querySelector(".findBtn").addEventListener('click',async function(e) {
-    conditions = [];
-    document.querySelectorAll(".conditionBlock").forEach(element => {
-        const name = element.className.split(" ")[1];
-        if(name!="range"){
-            const newCondition = new Condition(
-                name,
-                element.querySelector('select').value,
-                element.querySelector('input').value
-            );
-            conditions.push(newCondition);
-        }else{
-            const newCondition = new Range(
-                element.querySelector('select').value,
-                element.querySelector('input.left').value,
-                element.querySelector('input.right').value
-            );
-            conditions.push(newCondition);
-        }
-    });
-    const response = await fetch("api/parse.php", {
-        method: "POST",
-        headers: {"Content-Type":"application/json", "Accept": "application/json"},
-        body: JSON.stringify(conditions)
-    });
-    if(response.ok){
-        document.querySelector('.resultContent').innerHTML = "";
-        const responseData = await response.json();
-        console.log(responseData);
-        responseData.forEach(element => {
-            let items = "";
-            let i = 0;
-            element.forEach(item => {
-                items = items + `
-                <div class="resultItemValueAndLabel">
-                        <div class="label">${COLS[i]}:</div>
-                        <div class="value">${item}</div>
-                </div>
-                `;
-                i++;
-            });
-            document.querySelector('.resultContent').innerHTML = document.querySelector('.resultContent').innerHTML + `
-                <div class="resultItem">
-                ${items}
-            </div>
-            `;
+    let maxSize = document.querySelector('.setMaxSize input').value;
+    let isNumber = /^\d+$/.test(maxSize);
+
+    if(isNumber){
+        conditions = [];
+        document.querySelectorAll(".conditionBlock").forEach(element => {
+            const name = element.className.split(" ")[1];
+            if(name!="range"){
+                const newCondition = new Condition(
+                    name,
+                    element.querySelector('select').value,
+                    element.querySelector('input').value
+                );
+                conditions.push(newCondition);
+            }else{
+                const newCondition = new Range(
+                    element.querySelector('select').value,
+                    element.querySelector('input.left').value,
+                    element.querySelector('input.right').value
+                );
+                conditions.push(newCondition);
+            }
         });
+        const response = await fetch("api/parse.php", {
+            method: "POST",
+            headers: {"Content-Type":"application/json", "Accept": "application/json"},
+            body: JSON.stringify({
+                conditions: conditions,
+                rowsToFind: maxSize
+            })
+        });
+        if(response.ok){
+            document.querySelector('.resultContent').innerHTML = "";
+            const responseData = await response.json();
+            console.log(responseData);
+            responseData.forEach(element => {
+                if(element[0]!=""&&element[0]!=null){
+                    let items = "";
+                    let i = 0;
+                    element.forEach(item => {
+                        
+                        items = items + `
+                        <div class="resultItemValueAndLabel">
+                                <div class="label">${COLS[i]}:</div>
+                                <div class="value">${item}</div>
+                        </div>
+                        `;
+                        i++;
+                    });
+                    document.querySelector('.resultContent').innerHTML = document.querySelector('.resultContent').innerHTML + `
+                        <div class="resultItem">
+                        ${items}
+                    </div>
+                    `;
+                }
+                
+            });
+        }
+    }else{
+        showErrorMessage("Неккоректные данные!");
     }
+    
 });
 var addBtns = document.querySelectorAll(".addConditionBtn");
 for (var i = 0; i < addBtns.length; i++) {

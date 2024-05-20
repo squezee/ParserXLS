@@ -296,3 +296,20 @@ select{
     font-weight: 400;
     color: black;
 }
+.setMaxSize{
+    margin-top: 25px;
+    max-width: 133px;
+    background-color:#46c03b;
+    border-radius: 4px;
+    padding: 10px 20px;
+}
+.setMaxSize .label{
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: white;
+    font-weight: 700;
+}
+.setMaxSize input{
+    width: 60px;
+    padding: 5px 10px;
+}

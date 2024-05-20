@@ -13,8 +13,5 @@
             }
             
         }
- }else{
-    header("Location: https://example.com/myOtherPage.php");
-    die();
  }
 ?>

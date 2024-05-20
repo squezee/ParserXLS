@@ -6,33 +6,34 @@ $data = json_decode($postData, true);
 $config = json_decode(file_get_contents("../config.json"));
 $cols = $config->cols;
 $result = [];
+$countOfCoincidences = 0;
 if ( $xls = Shuchkin\SimpleXLS::parseFile('../table.xls') ) {
     $rows = $xls->rows();
     for($i=1;$i<count($rows);$i++){
         $countOfConditions = 0;
         $countOfSuccessConditions = 0;
-        for($j=0;$j<count($data);$j++){
+        for($j=0;$j<count($data['conditions']);$j++){
             for($l=0;$l<count($rows[$i]);$l++){
-                if($cols[$l]==$data[$j]['col']){
+                if($cols[$l]==$data['conditions'][$j]['col']){
                     $countOfConditions++;
-                    switch($data[$j]['name']){
+                    switch($data['conditions'][$j]['name']){
                         case "forValue":
-                            if($rows[$i][$l]==$data[$j]['value']){
+                            if($rows[$i][$l]==$data['conditions'][$j]['value']){
                                 $countOfSuccessConditions++;
                             }
                             break;
                         case "startedBy":
-                            if(substr($rows[$i][$l], 0, strlen($data[$j]['value']))==$data[$j]['value']){
+                            if(substr($rows[$i][$l], 0, strlen($data['conditions'][$j]['value']))==$data['conditions'][$j]['value']){
                                 $countOfSuccessConditions++;
                             }
                             break;
                         case "endedBy":
-                            if(substr($rows[$i][$l], -1, strlen($data[$j]['value']))==$data[$j]['value']){
+                            if(substr($rows[$i][$l], -1, strlen($data['conditions'][$j]['value']))==$data['conditions'][$j]['value']){
                                 $countOfSuccessConditions++;
                             }
                             break;
                         case "contains":
-                            if(str_contains($rows[$i][$l], $data[$j]['value'])){
+                            if(str_contains($rows[$i][$l], $data['conditions'][$j]['value'])){
                                 $countOfSuccessConditions++;
                             }
                             break;
@@ -40,7 +41,7 @@ if ( $xls = Shuchkin\SimpleXLS::parseFile('../table.xls') ) {
                             if($rows[$i][$l]!=null){
                                 $valueToInt = intval($rows[$i][$l]);
                                 if($valueToInt!=0){
-                                    if($valueToInt>=intval($data[$j]["left"])&&$valueToInt<=intval($data[$j]["right"])){
+                                    if($valueToInt>=intval($data['conditions'][$j]["left"])&&$valueToInt<=intval($data['conditions'][$j]["right"])){
                                         $countOfSuccessConditions++;
                                     }
                                 }
@@ -51,9 +52,9 @@ if ( $xls = Shuchkin\SimpleXLS::parseFile('../table.xls') ) {
                 }
             }
         }
-        if($countOfConditions==$countOfSuccessConditions){
+        if($countOfConditions==$countOfSuccessConditions&&$countOfCoincidences<$data['rowsToFind']){
             $result[$i] = $rows[$i];
-
+            $countOfCoincidences++;
         }
         
     }
